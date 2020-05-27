@@ -411,7 +411,7 @@ public extension CollectionDirector {
 
 	func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.shouldSelect, model: model, cell: nil, path: indexPath, params: nil) as? Bool) ?? true
+		return (adapter.dispatchEvent(.shouldSelect, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil) as? Bool) ?? true
 	}
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -423,29 +423,29 @@ public extension CollectionDirector {
 
 	func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.shouldDeselect, model: model, cell: nil, path: indexPath, params: nil) as? Bool) ?? true
+		return (adapter.dispatchEvent(.shouldDeselect, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil) as? Bool) ?? true
 	}
 
 	func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 		let (model, adapter) = context(forItemAt: indexPath)
-		adapter.dispatchEvent(.didDeselect, model: model, cell: nil, path: indexPath, params: nil)
+		adapter.dispatchEvent(.didDeselect, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil)
 	}
 
 	// MARK: - Highlight -
 
 	func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.shouldHighlight, model: model, cell: nil, path: indexPath, params: nil) as? Bool) ?? true
+		return (adapter.dispatchEvent(.shouldHighlight, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil) as? Bool) ?? true
 	}
 
 	func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
 		let (model, adapter) = context(forItemAt: indexPath)
-		adapter.dispatchEvent(.didHighlight, model: model, cell: nil, path: indexPath, params: nil)
+		adapter.dispatchEvent(.didHighlight, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil)
 	}
 
 	func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
 		let (model, adapter) = context(forItemAt: indexPath)
-		adapter.dispatchEvent(.didUnhighlight, model: model, cell: nil, path: indexPath, params: nil)
+		adapter.dispatchEvent(.didUnhighlight, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil)
 	}
 
 	// MARK: - Layout -
@@ -475,7 +475,7 @@ public extension CollectionDirector {
 
 	func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.shouldShowEditMenu, model: model, cell: nil, path: indexPath, params: nil) as? Bool) ?? false
+		return (adapter.dispatchEvent(.shouldShowEditMenu, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil) as? Bool) ?? false
 	}
 
 	// MARK: - Actions -
@@ -484,12 +484,12 @@ public extension CollectionDirector {
         guard !indexPath.isEmpty else { return false }
         
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.canPerformEditAction, model: model, cell: nil, path: indexPath, params: action, sender) as? Bool) ?? true
+		return (adapter.dispatchEvent(.canPerformEditAction, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: action, sender) as? Bool) ?? true
 	}
 
 	func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
 		let (model, adapter) = context(forItemAt: indexPath)
-		adapter.dispatchEvent(.performEditAction, model: model, cell: nil, path: indexPath, params: action, sender)
+		adapter.dispatchEvent(.performEditAction, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: action, sender)
 	}
 
 	// MARK: - Spring Load -
@@ -497,14 +497,14 @@ public extension CollectionDirector {
 	@available(iOS 11.0, *)
 	func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
 		let (model,adapter) = self.context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.shouldSpringLoad, model: model, cell: nil, path: indexPath, params: nil) as? Bool) ?? true
+		return (adapter.dispatchEvent(.shouldSpringLoad, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil) as? Bool) ?? true
 	}
 
 	// MARK: - Focus -
 
 	func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.canFocus, model: model, cell: nil, path: indexPath, params: nil) as? Bool) ?? true
+		return (adapter.dispatchEvent(.canFocus, model: model, cell: collectionView.cellForItem(at: indexPath), path: indexPath, params: nil) as? Bool) ?? true
 	}
 
 	func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {

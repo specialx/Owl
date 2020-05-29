@@ -643,7 +643,11 @@ extension TableDirector: UITableViewDataSource, UITableViewDelegate {
 
 	public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.willSelect, model: model, cell: nil, path: indexPath, params: nil) as? IndexPath) ?? indexPath
+        if let untyped = adapter.dispatchEvent(.willSelect, model: model, cell: nil, path: indexPath, params: nil) {
+            return untyped as? IndexPath ?? indexPath
+        }
+        
+        return nil
 	}
 
 	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

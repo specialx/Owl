@@ -90,9 +90,9 @@ public extension TableCellAdapter {
 		public var shouldSpringLoad: ((Event) -> Bool)? = nil
 		public var tapOnAccessory: ((Event) -> Void)? = nil
 
-		public var willSelect: ((Event) -> IndexPath?)? = nil
+        public var willSelect: ((Event) -> IndexPath?)? = { $0.indexPath }
 		public var didSelect: ((Event) -> TableAdapterCellAction)? = nil
-		public var willDeselect: ((Event) -> IndexPath?)? = nil
+		public var willDeselect: ((Event) -> IndexPath?)? = { $0.indexPath }
 		public var didDeselect: ((Event) -> IndexPath?)? = nil
 
 		public var willBeginEdit: ((Event) -> Void)? = nil

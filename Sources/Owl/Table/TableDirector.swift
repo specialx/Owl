@@ -667,7 +667,12 @@ extension TableDirector: UITableViewDataSource, UITableViewDelegate {
 
 	public func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
 		let (model, adapter) = context(forItemAt: indexPath)
-		return (adapter.dispatchEvent(.willDeselect, model: model, cell: nil, path: indexPath, params: nil) as? IndexPath)
+        
+        if let untyped = adapter.dispatchEvent(.willDeselect, model: model, cell: nil, path: indexPath, params: nil) {
+            return untyped as? IndexPath ?? indexPath
+        }
+        
+        return nil
 	}
 
 	public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
